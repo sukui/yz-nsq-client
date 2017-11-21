@@ -3,7 +3,7 @@
     "require": {
         "zanphp/spi": "dev-master",
         "zanphp/container": "dev-laogui",
-        "zanphp/contracts": "dev-laogui",
+        "zanphp/contracts": "dev-master",
         "zanphp/service-chain": "dev-laogui",
         "zanphp/trace": "dev-laogui"
     },
