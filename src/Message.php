@@ -51,16 +51,19 @@ class Message
 
     private $partition = -1;
     
-    private $extendSupport;
+    private $extendSupport = false;
+
+    private $orderSupport = false;
 
     /**
      * @var MsgDelegate
      */
     private $delegate;
 
-    public function __construct($bytes, MsgDelegate $delegate, $extendSupport = false)
+    public function __construct($bytes, MsgDelegate $delegate, $extendSupport = false, $orderSupport)
     {
         $this->extendSupport = $extendSupport;
+        $this->orderSupport  = $orderSupport;
         $this->delegate = $delegate;
         $this->autoResponse = NsqConfig::getMessageAutoResponse();
         $this->unpack($bytes);
@@ -260,6 +263,12 @@ class Message
                 }
             }
         }
+        //有序订阅ext-info
+        if($this->orderSupport){
+            $_diskQueueOffset = $binary->read(8);
+            $_diskQueueSize = $binary->read(4);
+        }
+
         $this->body = $binary->readFull();
         ObjectPool::release($binary);
     }

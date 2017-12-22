@@ -31,6 +31,7 @@ class NsqConfig
     private static $publishRetry;
     // private static $disposableConnLifecycle;
     private static $messageAutoResponse;
+    private static $proxy;
 
     public static function init(array $config)
     {
@@ -49,7 +50,7 @@ class NsqConfig
             "deflate_level" => 1,
             "sample_rate" => 0,
             "user_agent" => static::UA . "/" . static::VER,
-            "msg_timeout" => 60 * 000, // ms
+            "msg_timeout" => 60 * 1000, // ms
         ];
 
         $backoffDefault = [
@@ -78,6 +79,7 @@ class NsqConfig
         static::$maxConnectionPerTopic      = Arr::get($config, "max_connection_per_topic",    4);
         static::$publishTimeout             = Arr::get($config, "publish_timeout",             3 * 1000);
         static::$publishRetry               = Arr::get($config, "publish_retry",               3);
+        static::$proxy                      = Arr::get($config, "proxy",               []);
         // static::$disposableConnLifecycle    = Arr::get($config, "disposable_connection_lifecycle", 3 * 1000 + 100);
     }
 
@@ -193,5 +195,9 @@ class NsqConfig
         } else {
             return 2500;
         }
+    }
+
+    public static function getProxy(){
+        return static::$proxy;
     }
 }

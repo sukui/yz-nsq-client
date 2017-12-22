@@ -60,7 +60,9 @@ class Consumer implements ConnDelegate, NsqdDelegate
     private $stats;
 
     private $desiredTag = '';
-    
+
+    private $ordered = false;
+
     /**
      * Consumer constructor.
      * @param $topic
@@ -89,6 +91,11 @@ class Consumer implements ConnDelegate, NsqdDelegate
     public function setDesiredTag($tag)
     {
         $this->desiredTag = $tag;
+    }
+
+    public function setOrdered($sub_ordered){
+        $this->ordered = (bool)$sub_ordered;
+        $this->lookup->setOrdered($this->ordered);
     }
 
     /**
@@ -525,7 +532,7 @@ class Consumer implements ConnDelegate, NsqdDelegate
     {
         // 加入新连接重新调整所有连接rdy状态
         $conn->setDelegate($this);
-        $conn->writeCmd(Command::subscribe($this->topic, $this->channel));
+        $conn->writeCmd(Command::subscribe($this->topic, $this->channel, $conn->getPartition(), $conn->getOrderSupport()));
         $this->maybeUpdateRDY($conn);
     }
 
@@ -538,7 +545,7 @@ class Consumer implements ConnDelegate, NsqdDelegate
         try {
             yield $this->lookup->reconnect($conn);
 
-            $conn->writeCmd(Command::subscribe($this->topic, $this->channel));
+            $conn->writeCmd(Command::subscribe($this->topic, $this->channel, $conn->getPartition(), $conn->getOrderSupport()));
 
             foreach ($this->getNsqdConns() as $conn) {
                 $this->maybeUpdateRDY($conn);

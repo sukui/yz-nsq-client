@@ -70,21 +70,24 @@ class Connection implements Async
     
     private $extendSupport = false;
 
+    private $orderSupport = false;
+
     private $extraIdentifyParams = [];
 
     /**
      * Disposable Connection
      * @param $host
      * @param $port
+     * @param $partition
      * @param int $lifeCycle
      * @return \Generator
      * @throws \Exception
      *  Connection 是 Async 对象, 这里用数组返回
      *  list($conn) = (yield Connection::getDisposable("10.9.80.209", 4150, $liftCycle));
      */
-    public static function getDisposable($host, $port, $lifeCycle = 3000)
+    public static function getDisposable($host, $port, $partition, $lifeCycle = 3000)
     {
-        $conn = new static($host, $port);
+        $conn = new static($host, $port, $partition);
         yield $conn->connect();
         $conn->isDisposable = true;
         Timer::after($lifeCycle, [$conn, "tryClose"]);
@@ -95,13 +98,15 @@ class Connection implements Async
      * Connection constructor.
      * @param $host
      * @param $port
+     * @param $partition
      * @param ConnDelegate $delegate
      */
-    public function __construct($host, $port, ConnDelegate $delegate = null)
+    public function __construct($host, $port, $partition, ConnDelegate $delegate = null)
     {
         $this->host = $host;
         $this->port = $port;
-        $this->addr = "$host:$port";
+        $this->partitionId = $partition;
+        $this->addr = "$host:$port:$partition";
         if ($delegate === null) {
             $this->delegate = NopConnDelegate::getInstance();
         } else {
@@ -128,7 +133,8 @@ class Connection implements Async
     private function createClient()
     {
         $this->client = new SwooleClient(SWOOLE_TCP, SWOOLE_SOCK_ASYNC);
-        $this->client->set([
+
+        $setting = [
             "open_length_check" => true,
             "package_length_type" => 'N',
             "package_length_offset" => 0,
@@ -136,7 +142,13 @@ class Connection implements Async
             "package_max_length" => NsqConfig::getPacketSizeLimit(),
             "socket_buffer_size" => NsqConfig::getSocketBufferSize(),
             "open_tcp_nodelay" => true,
-        ]);
+        ];
+        if(!empty($proxy = NsqConfig::getProxy())){
+            $setting['socks5_host'] = $proxy['host'];
+            $setting['socks5_port'] = $proxy['port'];
+        }
+        $this->client->set($setting);
+
         $this->client->on("connect", $this->onConnect());
         $this->client->on("receive", [$this, "onIdentify"]); // Cannot destroy active lambda function
         $this->client->on("error", $this->onClose(true));
@@ -156,6 +168,16 @@ class Connection implements Async
     public function getExtendSupport()
     {
         return $this->extendSupport;
+    }
+
+    public function setOrderSupport($orderSupport)
+    {
+        $this->orderSupport = $orderSupport;
+    }
+
+    public function getOrderSupport()
+    {
+        return $this->orderSupport;
     }
     
     public function isDisposable()
@@ -458,7 +480,7 @@ class Connection implements Async
 
             case Frame::FrameTypeMessage:
                 try {
-                    $msg = new Message($frame->getBody(), new ConnMsgDelegate($this), $this->extendSupport);
+                    $msg = new Message($frame->getBody(), new ConnMsgDelegate($this), $this->extendSupport, $this->orderSupport);
                     yield $this->delegate->onMessage($this, $msg);
                 } finally {
                     $this->rdyCount--;

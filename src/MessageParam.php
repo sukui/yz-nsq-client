@@ -39,6 +39,8 @@ class MessageParam {
     {
         return isset($this->params['##trace_id']) ? $this->params['##trace_id'] : null;
     }
+
+
     
     static function fromArray($array)
     {

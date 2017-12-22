@@ -81,9 +81,9 @@ class Producer implements ConnDelegate, NsqdDelegate, Async
     /**
      * @return \Generator
      */
-    private function take()
+    private function take($orderKey=null)
     {
-        yield $this->lookup->take();
+        yield $this->lookup->take($orderKey);
     }
 
     private function release(Connection $conn)
@@ -113,6 +113,7 @@ class Producer implements ConnDelegate, NsqdDelegate, Async
      * Publish a message to a topic
      * @param string $message
      * @param MessageParam $params
+     * @param string $orderKey
      * @throws NsqException
      * @return \Generator
      *
@@ -124,7 +125,7 @@ class Producer implements ConnDelegate, NsqdDelegate, Async
      *  E_BAD_MESSAGE
      *  E_MPUB_FAILED
      */
-    public function publish($message, $params)
+    public function publish($message, $params, $orderKey=null)
     {
         $this->trace = (yield getContext('trace'));
 
@@ -133,7 +134,7 @@ class Producer implements ConnDelegate, NsqdDelegate, Async
             $this->ctx = $message;
         }
         /* @var Connection $conn */
-        list($conn) = (yield $this->take());
+        list($conn) = (yield $this->take($orderKey));
         $partitionId = $conn->getPartition();
         $paramArray = null;
         if (is_object($params)) {

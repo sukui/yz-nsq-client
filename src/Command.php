@@ -105,18 +105,25 @@ class Command
      *
      * @param string $topic
      * @param string $channel
-     * @return string
+     * @param null $partitionID
+     * @param bool $ordered
+     * @return string Success Response:
      *
      * Success Response:
-     *  OK
+     * OK
      * Error Responses:
-     *  E_INVALID
-     *  E_BAD_TOPIC
-     *  E_BAD_CHANNEL
+     * E_INVALID
+     * E_BAD_TOPIC
+     * E_BAD_CHANNEL
      */
-    public static function subscribe($topic, $channel)
+    public static function subscribe($topic, $channel, $partitionID = null, $ordered = false)
     {
-        return static::cmd("SUB", [$topic, $channel]);
+        if(is_numeric($partitionID)){
+            return static::cmd($ordered?'SUB_ORDERED':'SUB',[$topic,$channel,$partitionID]);
+        }else{
+            return static::cmd("SUB", [$topic, $channel]);
+        }
+
     }
 
     /**

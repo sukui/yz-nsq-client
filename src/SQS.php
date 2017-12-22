@@ -38,6 +38,9 @@ class SQS
         $maxInFlight = $maxInFlight > 0 ? $maxInFlight : NsqConfig::getMaxInFlightCount();
         $consumer->changeMaxInFlight($maxInFlight ?: $maxInFlight);
 
+        $ordered = empty($options['ordered'])?false:true;
+        $consumer->setOrdered($ordered);
+
         $desiredTag = (yield static::getServiceChainName());
         if (!$desiredTag) {
             $desiredTag = isset($options['desiredTag']) ? strval($options['desiredTag']) : '';
@@ -89,17 +92,17 @@ class SQS
      * @param string $topic
      * @param mixed $message
      * @param MessageParam $params
+     * @param null $orderKey
      * @return \Generator yield bool
-     * @throws NsqException
      */
-    public static function publish($topic, $message, $params = null)
+    public static function publish($topic, $message, $params = null,$orderKey = null)
     {
         if (is_scalar($message)) {
             $message = strval($message);
         } else {
             $message = Json::encode($message);
         }
-        return self::publishStrings($topic, [$message], $params);
+        return self::publishStrings($topic, [$message], $params, $orderKey);
     }
 
 
@@ -126,11 +129,11 @@ class SQS
     /**
      * @param string $topic
      * @param string[] $messages
-     * @param MessageParam $params
+     * @param array|MessageParam $params
+     * @param null $orderKey
      * @return \Generator yield bool
-     * @throws NsqException
      */
-    private static function publishStrings($topic, $messages, $params = [])
+    private static function publishStrings($topic, $messages, $params = [],$orderKey = null)
     {
         Command::checkTopicChannelName($topic);
 
@@ -170,23 +173,23 @@ class SQS
 
         $producer = InitializeSQS::$producers[$topic];
         $retry = NsqConfig::getPublishRetry();
-        if (empty($params)) {
-            yield self::publishWithRetry($producer, $topic, $messages, $params, $retry);
+        if (empty($params) && ($orderKey === null)) {
+            yield self::publishWithRetry($producer, $topic, $messages, $params, $retry, $orderKey);
         } else {
             foreach ($messages as $message) {
-                yield self::publishWithRetry($producer, $topic, $message, $params, $retry);
+                yield self::publishWithRetry($producer, $topic, $message, $params, $retry, $orderKey);
             }
         }
     }
 
-    private static function publishWithRetry(Producer $producer, $topic, $messages, $params, $n = 3)
+    private static function publishWithRetry(Producer $producer, $topic, $messages, $params, $n = 3, $orderKey=null)
     {
         $resp = null;
         try {
             if (is_array($messages)) {
                 $resp = (yield $producer->multiPublish($messages)); // mpub not supports extends
             } else {
-                $resp = (yield $producer->publish($messages, $params));
+                $resp = (yield $producer->publish($messages, $params, $orderKey));
             }
         } catch (\Throwable $ex) {
         } catch (\Exception $ex) {
