@@ -146,6 +146,8 @@ class Connection implements Async
         if(!empty($proxy = NsqConfig::getProxy())){
             $setting['socks5_host'] = $proxy['host'];
             $setting['socks5_port'] = $proxy['port'];
+            $setting['socks5_username'] = $proxy['username']?$proxy['username']:'';
+            $setting['socks5_password'] = $proxy['password']?$proxy['password']:'';
         }
         $this->client->set($setting);
 

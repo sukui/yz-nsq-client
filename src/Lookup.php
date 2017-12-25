@@ -664,6 +664,8 @@ class Lookup
             $httpClient->set([
                 'socks5_host' => $proxy['host'],
                 'socks5_port' => $proxy['port'],
+                'socks5_username' => $proxy['username']?$proxy['username']:'',
+                'socks5_password' => $proxy['password']?$proxy['password']:'',
             ]);
         }
 
