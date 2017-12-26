@@ -1,5 +1,5 @@
 {
-    "name": "php-lib/nsq-client",
+    "name": "zanphp/yz-nsq-client",
     "require": {
         "zanphp/spi": "dev-master",
         "zanphp/container": "dev-laogui",
@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Zan\\Framework\\Components\\Nsq\\": "src/"
+            "ZanPHP\\YZNsq\\": "src/"
         },
         "classmap": [
             "src/"
@@ -19,7 +19,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Zan\\Framework\\Components\\Nsq\\Test\\": "test/"
+            "ZanPHP\\YZNsq\\Test\\": "test/"
         },
         "classmap": [
 

@@ -1,5 +1,5 @@
 <?php
-namespace Zan\Framework\Components\Nsq\Toc;
+namespace ZanPHP\YZNsq\Toc;
 
 /**
  * 用以构建TOC能够接受的消息

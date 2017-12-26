@@ -1,10 +1,10 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
 use swoole_client as SwooleClient;
-use Zan\Framework\Components\Nsq\Contract\ConnDelegate;
-use Zan\Framework\Components\Nsq\Utils\Backoff;
+use ZanPHP\YZNsq\Contract\ConnDelegate;
+use ZanPHP\YZNsq\Utils\Backoff;
 use Zan\Framework\Foundation\Contract\Async;
 use Zan\Framework\Foundation\Coroutine\Task;
 use Zan\Framework\Network\Common\DnsClient;

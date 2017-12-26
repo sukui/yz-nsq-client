@@ -1,12 +1,12 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
 
-use Zan\Framework\Components\Nsq\Utils\Binary;
-use Zan\Framework\Components\Nsq\Utils\MemoryBuffer;
-use Zan\Framework\Components\Nsq\Utils\ObjectPool;
-use Zan\Framework\Components\Nsq\Utils\StringBuffer;
+use ZanPHP\YZNsq\Utils\Binary;
+use ZanPHP\YZNsq\Utils\MemoryBuffer;
+use ZanPHP\YZNsq\Utils\ObjectPool;
+use ZanPHP\YZNsq\Utils\StringBuffer;
 use Zan\Framework\Contract\Network\Bootable;
 use Zan\Framework\Foundation\Core\Config;
 use Zan\Framework\Foundation\Coroutine\Task;

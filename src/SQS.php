@@ -1,10 +1,10 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
 
-use Zan\Framework\Components\Nsq\Contract\MsgHandler;
-use Zan\Framework\Components\Nsq\Utils\Lock;
+use ZanPHP\YZNsq\Contract\MsgHandler;
+use ZanPHP\YZNsq\Utils\Lock;
 use Zan\Framework\Utilities\Types\Json;
 use ZanPHP\Container\Container;
 use ZanPHP\Contracts\ServiceChain\ServiceChainer;

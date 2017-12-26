@@ -1,9 +1,9 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq\Utils;
+namespace ZanPHP\YZNsq\Utils;
 
 use swoole_buffer as SwooleBuffer;
-use Zan\Framework\Components\Nsq\Contract\Buffer;
+use ZanPHP\YZNsq\Contract\Buffer;
 
 
 /**

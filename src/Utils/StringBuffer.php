@@ -1,8 +1,8 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq\Utils;
+namespace ZanPHP\YZNsq\Utils;
 
-use Zan\Framework\Components\Nsq\Contract\Buffer;
+use ZanPHP\YZNsq\Contract\Buffer;
 
 class StringBuffer implements Buffer
 {

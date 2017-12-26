@@ -1,9 +1,9 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
-use Zan\Framework\Components\Nsq\Utils\Binary;
-use Zan\Framework\Components\Nsq\Utils\ObjectPool;
+use ZanPHP\YZNsq\Utils\Binary;
+use ZanPHP\YZNsq\Utils\ObjectPool;
 
 
 class Frame

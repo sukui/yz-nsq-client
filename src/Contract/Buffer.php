@@ -1,6 +1,6 @@
 <?php
 
-namespace Zan\Framework\Components\Nsq\Contract;
+namespace ZanPHP\YZNsq\Contract;
 
 
 interface Buffer

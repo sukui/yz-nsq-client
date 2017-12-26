@@ -1,5 +1,5 @@
 <?php
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
 class MessageParam {
     private $params = [];

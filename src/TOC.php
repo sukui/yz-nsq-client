@@ -6,10 +6,10 @@
  * Time: 下午6:29
  */
 
-namespace Zan\Framework\Components\Nsq;
+namespace ZanPHP\YZNsq;
 
 
-use Zan\Framework\Components\Nsq\Toc\TocException;
+use ZanPHP\YZNsq\Toc\TocException;
 use Zan\Framework\Foundation\Core\Config;
 use Zan\Framework\Utilities\Types\Json;
 
