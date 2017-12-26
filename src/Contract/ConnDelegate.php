@@ -2,9 +2,8 @@
 
 namespace ZanPHP\YZNsq\Contract;
 
-
-use Zan\Framework\Components\Nsq\Connection;
-use Zan\Framework\Components\Nsq\Message;
+use ZanPHP\YZNsq\Connection;
+use ZanPHP\YZNsq\Message;
 
 interface ConnDelegate
 {

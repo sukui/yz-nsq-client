@@ -7,9 +7,9 @@ use ZanPHP\YZNsq\Contract\ConnDelegate;
 use ZanPHP\YZNsq\Contract\MsgHandler;
 use ZanPHP\YZNsq\Contract\NsqdDelegate;
 use ZanPHP\YZNsq\Utils\Backoff;
-use Zan\Framework\Foundation\Coroutine\Task;
-use Zan\Framework\Network\Server\Timer\Timer;
-use Zan\Framework\Utilities\Types\Time;
+use ZanPHP\Coroutine\Task;
+use ZanPHP\Timer\Timer;
+use ZanPHP\Support\Time;
 
 
 class Consumer implements ConnDelegate, NsqdDelegate

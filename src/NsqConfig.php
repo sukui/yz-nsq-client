@@ -3,7 +3,7 @@
 namespace ZanPHP\YZNsq;
 
 
-use Zan\Framework\Utilities\Types\Arr;
+use ZanPHP\Support\Arr;
 
 class NsqConfig
 {

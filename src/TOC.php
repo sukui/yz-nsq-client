@@ -8,10 +8,9 @@
 
 namespace ZanPHP\YZNsq;
 
-
 use ZanPHP\YZNsq\Toc\TocException;
-use Zan\Framework\Foundation\Core\Config;
-use Zan\Framework\Utilities\Types\Json;
+use ZanPHP\Config\Config;
+use ZanPHP\Support\Json;
 
 class TOC
 {

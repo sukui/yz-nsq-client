@@ -3,7 +3,7 @@
 namespace ZanPHP\YZNsq\Contract;
 
 
-use Zan\Framework\Components\Nsq\Message;
+use ZanPHP\YZNsq\Message;
 
 interface MsgDelegate
 {

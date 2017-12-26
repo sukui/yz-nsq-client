@@ -5,8 +5,8 @@ namespace ZanPHP\YZNsq;
 use ZanPHP\YZNsq\Contract\MsgDelegate;
 use ZanPHP\YZNsq\Utils\Binary;
 use ZanPHP\YZNsq\Utils\ObjectPool;
-use Zan\Framework\Utilities\Types\Time;
-use Zan\Framework\Utilities\Types\Json;
+use ZanPHP\Support\Time;
+use ZanPHP\Support\Json;
 
 class Message
 {

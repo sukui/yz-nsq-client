@@ -2,8 +2,7 @@
 
 namespace ZanPHP\YZNsq\Toc;
 
-
-use Zan\Framework\Foundation\Exception\ZanException;
+use ZanPHP\Exception\ZanException;
 
 class TocException extends ZanException
 {

@@ -2,9 +2,7 @@
 
 namespace ZanPHP\YZNsq\Utils;
 
-
-use Zan\Framework\Components\Nsq\Contract\Buffer;
-
+use ZanPHP\YZNsq\Contract\Buffer;
 
 class Binary implements Buffer
 {

@@ -1,10 +1,8 @@
 <?php
 
 namespace ZanPHP\YZNsq\Contract;
-
-use Zan\Framework\Components\Nsq\Consumer;
-use Zan\Framework\Components\Nsq\Message;
-
+use ZanPHP\YZNsq\Consumer;
+use ZanPHP\YZNsq\Message;
 
 /**
  * Interface MessageHandler

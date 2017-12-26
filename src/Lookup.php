@@ -3,10 +3,10 @@
 namespace ZanPHP\YZNsq;
 
 use ZanPHP\YZNsq\Contract\NsqdDelegate;
-use Zan\Framework\Foundation\Coroutine\Task;
-use Zan\Framework\Network\Common\HttpClient;
-use Zan\Framework\Network\Common\Response;
-use Zan\Framework\Network\Server\Timer\Timer;
+use ZanPHP\Coroutine\Task;
+use ZanPHP\HttpClient\Response;
+use ZanPHP\HttpClient\HttpClient;
+use ZanPHP\Timer\Timer;
 
 
 class Lookup

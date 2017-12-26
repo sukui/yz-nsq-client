@@ -2,8 +2,6 @@
 
 namespace ZanPHP\YZNsq;
 
-
-
 use ZanPHP\YZNsq\Contract\MsgHandler;
 
 class SimpleMsgHandler implements MsgHandler

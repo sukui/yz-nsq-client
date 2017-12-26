@@ -2,14 +2,13 @@
 
 namespace ZanPHP\YZNsq;
 
-
 use ZanPHP\YZNsq\Utils\Binary;
 use ZanPHP\YZNsq\Utils\MemoryBuffer;
 use ZanPHP\YZNsq\Utils\ObjectPool;
 use ZanPHP\YZNsq\Utils\StringBuffer;
-use Zan\Framework\Contract\Network\Bootable;
-use Zan\Framework\Foundation\Core\Config;
-use Zan\Framework\Foundation\Coroutine\Task;
+use ZanPHP\Contracts\Foundation\Bootable;
+use ZanPHP\Config\Config;
+use ZanPHP\Coroutine\Task;
 
 class InitializeSQS implements Bootable
 {

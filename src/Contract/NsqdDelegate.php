@@ -2,8 +2,7 @@
 
 namespace ZanPHP\YZNsq\Contract;
 
-
-use Zan\Framework\Components\Nsq\Connection;
+use ZanPHP\YZNsq\Connection;
 
 interface NsqdDelegate
 {
