@@ -11,11 +11,11 @@ class SQS
      * @param string $topic
      * @param string $channel
      * @param MsgHandler|callable $msgHandler
-     * @param int $maxInFlight
+     * @param array $options maxInFlight:并发处理消息数量 ordered:有序消息
      * @return \Generator yield return Consumer
      * @throws NsqException
      */
-    public static function subscribe($topic, $channel, $msgHandler, $maxInFlight = -1);
+    public static function subscribe($topic, $channel, $msgHandler, $options = []);
     
     /**
      * 取消订阅
@@ -26,13 +26,24 @@ class SQS
     public static function unSubscribe($topic, $channel);
     
     /**
-     * 发布
+     * 单个发布 
      * @param string $topic
-     * @param string[] ...$messages
+     * @param mixed $message
+     * @param MessageParam $params
+     * @param null $orderKey 有序消息关键值
      * @return \Generator yield bool
-     * @throws NsqException
      */
-    public static function publish($topic, ...$messages);
+     public static function publish($topic, $message, $params = null,$orderKey = null);
+     
+     /**
+      * 批量发布 
+      * @param string $topic
+      * @param mixed[] $messages
+      * @param MessageParam $params
+      * @return \Generator yield bool
+      * @throws NsqException
+      */
+     public static function publishMulti($topic, $messages, $params = null);
     
     /**
      * 统计信息
